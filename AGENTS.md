@@ -1,107 +1,177 @@
-Never ship a generic UI for a new project. If the user has not specified a style in their request:
+Set high standards for UI originality and code quality when starting or iterating on projects. Apply deliberate styles, preserve accessibility and performance, and maintain tight code and repo discipline at all times.
 
-- Pick one from the list below **or** invent a consistent style of your own.
-- For new projects, apply a style as below or invent your own. For existing projects, continue using the current style.
-- To **detect a new project**, inspect `page.tsx`—if it matches the standard Next.js template, treat it as new.
+# UI and Style Policy
+
+Never ship a generic UI for any new project. If the user does not specify a style in their request:
+
+- **Choose** a consistent style from the list below, or invent a new coherent style of your own.
+- For **new projects**: apply a style as below (from the list or your own invention).
+- For **existing projects**: continue with the previously chosen style.
+- To **detect a new project**: inspect `page.tsx`. If it matches the default Next.js template, treat it as a new project.
 
 ### Style Options
 
-1. **Neobrutalist** — stark mono, thick rules, oversized type, punch accent.
-2. **Retro-Futurist** — neon/cyan magenta, soft glow, gridlines.
-3. **Swiss/International** — strict grid, red/black/white, disciplined whitespace.
-4. **Editorial/Magazine** — serif headlines, asymmetry, image-first.
-5. **Terminal/Mono** — dark canvas, monospace, scanlines, caret micro-motion.
-6. **Bauhaus Geo** — primary triad, geometric blocks, circular motifs.
-7. **Memphis Pop** — playful shapes, confetti chips, bold color.
-8. **Nordic Calm** — cool neutrals, soft gradients, airy spacing.
-9. **Monochrome Bold** — pure black/white, crisp 1px rules.
-10. **Cyberpunk Noir** — near-black, one acid accent, restrained glitch.
-11. **Invent your own style** — feel free to invent your own style, but ensure consistency once chosen.
+1. **Neobrutalist**: Stark mono, thick rules, oversized type, punch accent.
+2. **Retro-Futurist**: Neon/cyan magenta, soft glow, gridlines.
+3. **Swiss/International**: Strict grid, red/black/white, disciplined whitespace.
+4. **Editorial/Magazine**: Serif headlines, asymmetry, image-first.
+5. **Terminal/Mono**: Dark canvas, monospace, scanlines, caret micro-motion.
+6. **Bauhaus Geo**: Primary triad, geometric blocks, circular motifs.
+7. **Memphis Pop**: Playful shapes, confetti chips, bold color.
+8. **Nordic Calm**: Cool neutrals, soft gradients, airy spacing.
+9. **Monochrome Bold**: Pure black/white, crisp 1px rules.
+10. **Cyberpunk Noir**: Near-black, one acid accent, restrained glitch.
+11. **Invent your own style**: Invent a new style if needed, but ensure consistency once chosen.
 
-## Avoid the purple themed designs, they are not good.
+**Avoid purple-themed designs—they are not effective.**
+
+### Visual Quality Bar
+
+- Open every screen with intentional hierarchy: clear entry point, persuasive primary action, and evident purpose.
+- Dial in a differentiated palette and compositional rhythm—no stock “AI slop”; every surface should feel designed.
+- Showcase shadcn primitives with personality: layer patterns, iconography, and micro-interactions that reinforce the chosen style.
+- Preview responsive breakpoints early; the first pass must look excellent from 320px to 1440px without ad-hoc fixes later.
+- Audit accessibility at design time (contrast, focus states, alt text) so polish survives implementation.
 
 # General Development Guidelines
 
-- Typed props throughout; pure utilities go in `src/lib` (no React in utilities).
-- Follow Next.js 15 App Router structure.
+- Use **typed props** everywhere.
+- Place pure utilities in `src/lib` (never import React there).
+- Structure the app following Next.js 15 App Router format:
   - Shared primitives: `src/components/ui`
-  - Route code: `src/app/*`
-- Tailwind tokens: `src/app/globals.css`. Extend shadcn UI in `src/components/ui`. when implementing a design, update the globals.css to match the design vs inline overrides.
-- when creating a new design, prefer to make the changes directly onto the page.tsx if possible vs creating new components that way the user sees the changes faster. when they ask to refactor or explicitly ask is when you should create new components.
-- it is okay to to do a lot of changes at onces, the user would rather see all their changes happen vs ask on different turns.
-  After each significant code change or tool call, validate the result in 1–2 lines and self-correct or proceed as appropriate.
-- if the users request is jsut a question, then you should answer the question dont overthink it.
-- you have access to ast-grep for quick searches in the codebase.
+  - Route files: `src/app/*`
+- Manage Tailwind tokens in `src/app/globals.css`. When designing, update `globals.css` to match the theme, rather than using inline overrides. Extend shadcn UI in `src/components/ui`.
+- When creating a new design, modify `page.tsx` directly when possible for rapid user feedback. Refactor into new components only when requested.
+- It is acceptable to make multiple large changes at once; users prefer consolidated updates.
+- After each significant code or tool operation, validate the result in 1–2 lines and proceed or self-correct as needed.
+- If the user only asks a question, simply answer it—do not overcomplicate.
+- Use ast-grep for fast code searches as needed.
 
----
+- Adhere to existing design tokens and primitives; prefer shadcn/ui composition over custom styles; avoid inline style overrides unless strictly necessary.
+
+## Client-First Components
+
+- Default to client components for new UI: start files with `"use client"` unless rendering is purely static in RSC.
+- Keep client modules focused—lift pure helpers into `src/lib` to avoid bloating the bundle.
+- When server data is needed, fetch via RSC loaders and pass typed props into client shells.
+- Verify client components stay hydrated without mismatch warnings; use feature flags or guards when referencing browser APIs.
 
 # UX & Accessibility (Non-Negotiable)
 
-- **Keyboard support everywhere**—apply WAI-ARIA patterns, visible `:focus-visible`, focus trap/restore in overlays.
-- **Hit target sizes:** ≥24px (≥44px on mobile); input font size ≥16px (prevents iOS zoom).
-- **URL-as-state:** keep filters, tabs, pagination in the URL.
-- Optimistic updates with undo/rollback; confirm destructive actions.
-- Use `aria-live="polite"` for async announcements; label all icon-only buttons; use semantic links (`<a>`/`<Link>`).
-- Design empty/loading/error states according to selected style.
+- **Full keyboard support**: Use WAI-ARIA as appropriate, ensure visible `:focus-visible` states, and implement focus trap/restore in overlays.
+- **Adequate hit target sizes**: Minimum 24px (44px on mobile); input font size at least 16px (to prevent iOS zoom).
+- **State in URL**: Filters, tabs, and pagination should be reflected in the URL.
+- Implement optimistic updates with undo/rollback; always confirm destructive actions.
+- Use `aria-live="polite"` for async updates. Label all icon-only buttons and ensure links use semantic elements (`<a>`/`<Link>`).
+- Design empty, loading, and error states according to the selected style.
+- Ensure high text-to-background contrast for legibility.
 
-# make sure the test is legible by keeping the contrast between the text and the background high
-make sure the UI is not boring and is engaging, it needs to look like there was effort put into it.
-make sure the website works on different screen sizes.
-you have access to a lot of beautiful components in the /components/ui folder, use them wherever useful!
+- Build experiences that feel crafted, surprising, and polished—no bland layouts shipped.
+- Verify responsive behavior on mobile, tablet, and desktop before handing off.
+- Reach for `src/components/ui` primitives first; extend them thoughtfully to maintain cohesion.
 
+# Performance Guidelines
 
----
+- **Images**: Use `next/image` with explicit `sizes` and dimensions. Set `priority` only for above-the-fold images. Prefer AVIF or WebP formats.
+- **Fonts**: Preconnect, preload critical fonts (1–2 faces), subset with `unicode-range`, and use `font-display: swap`.
+- **Lists**: Use `content-visibility: auto`. Virtualize lists with more than 100 rows.
+- **Motion**: Restrict to CSS transforms and opacity; respect `prefers-reduced-motion`. Never use `transition: all`.
+- **Network**: Batch actions and fetches; cache/tag in RSC; keep POST/PATCH/DELETE under 500 ms.
 
-# Performance Defaults
+# Layout & Overflow Safety
 
-- **Images:** Use `next/image` with explicit `sizes` and dimensions; `priority` only for above-the-fold; prefer AVIF/WebP.
-- **Fonts:** Preconnect; preload critical 1–2 font faces; subset via `unicode-range`; use `font-display: swap`.
-- **Lists:** Use `content-visibility: auto`; virtualize lists >100 rows.
-- **Motion:** Restrict to CSS transforms and opacity; respect `prefers-reduced-motion`; never use `transition: all`.
-- **Network:** Batch actions/fetches; cache/tag in RSC; keep POST/PATCH/DELETE under **500 ms**.
+- **Prevent text overflow**:
+  - Use responsive type to avoid oversized headings on small screens (e.g., `text-base sm:text-lg md:text-xl`).
+  - Ensure long/unbroken content wraps with `break-words`; reserve `break-all` as a last resort.
+  - For single-line labels in flex rows: set `min-w-0` on the flex child and add `truncate` when appropriate.
+- **Prevent layout bleed**:
+  - Constrain widths inside components with `w-full max-w-full`; avoid viewport units in components.
+  - In flex/grid layouts where children should shrink: set `min-w-0` and `min-h-0` on child containers.
+  - Wrap absolutely positioned decorative layers with a `relative` parent; clip with `overflow-hidden` when the parent has rounded edges.
+  - Prefer `gap-*` spacing over negative margins; avoid absolute positioning unless essential.
+- **Responsive safety checks**:
+  - Ensure no horizontal scrollbars at any breakpoint; if needed (e.g., data tables), scope with `overflow-x-auto` on the smallest container.
+  - Allow content to wrap (`flex-wrap`) where appropriate rather than forcing fixed widths.
+- **Media sizing**:
+  - Images/videos must not overflow their containers: use `max-w-full h-auto`.
+  - For fixed-height regions, use `object-cover` inside a `relative overflow-hidden` wrapper.
 
----
+## Style Guardrails (Enforced)
 
-# Repository Guidelines
+- **Color discipline**:
+  - Commit to one base, one neutral, and one accent; derive interaction states with opacity, not new hues.
+  - Maintain WCAG AA: body text ≥ 4.5:1; captions/labels ≥ 3:1 on solid surfaces.
+  - Never pair acid yellow accents with teal or green bases.
+- **Backgrounds**:
+  - Default to flat fills or a single subtle radial/linear gradient ≤ 8% contrast.
+  - Avoid noise overlays, glow halos, or stacked gradients unless the chosen style mandates them.
+- **Typography**:
+  - Limit the system to two families (display + text) on a modular scale (~1.25).
+  - Cap lead copy at 60–72ch and body copy at 45–65ch; keep headlines within three lines.
+  - Use uppercase micro-labels only when the style requires it; otherwise default to sentence case.
+- **Spacing & grid**:
+  - Work on an 8-pt scale; container widths: sm 640 / md 768 / lg 1024 / xl 1280 / 2xl 1440.
+  - Align labels, inputs, and CTAs to a strict 12-column grid.
+  - Choose a single corner radius (4 / 8 / 12 / 16) and apply it across the page.
+- **Forms**:
+  - Keep inputs ≥44px tall; labels 12–14px; placeholders ≥70% of body text contrast.
+  - Make the primary CTA visually dominant—size, weight, and contrast must signal priority.
+  - Place inline help beneath inputs; avoid cluttering with side notes.
+- **Cards & chips**:
+  - Stick to one elevation level (e.g., `shadow-sm`) or go flat; no glow effects.
+  - Derive chip and badge colors from the primary accent, without introducing extra hues.
+- **Motion**:
+  - Limit transitions to transforms and opacity while honoring `prefers-reduced-motion`.
+  - Keep micro-interactions under 200ms; never ship perpetual glows or pulsing rings.
+- **Anti-ugly self-check**:
+  - Multiple hero gradients or glow rings present? Remove them.
+  - Sibling components with mismatched radii? Normalize before shipping.
+  - Accent color inconsistent across chips, links, focus rings, or CTAs? Realign tokens.
+  - Body or placeholder contrast failing WCAG? Fix the palette.
+  - Screen lacks a focal point or clear primary CTA? Clarify the hierarchy.
+  - Labels, inputs, help text, and CTAs off the 8-pt grid? Realign them.
+
+# Repository Structure
 
 ## Project Structure & Module Organization
 
-- `src/app`: Next.js 15 App Router routes; `layout.tsx` wires global providers and fonts.
-- `src/components/ui`: Shared shadcn primitives; co-locate feature-specific widgets with their entry point.
-- `src/hooks`: Typed hooks for forms and state; isolate side effects.
-- `src/lib`: Pure utilities; avoid React imports for tree-shakeable bundles.
-- Static assets: `public/`; global tokens in `src/app/globals.css`.
-- Tailwind metadata: `postcss.config.mjs`, `components.json`.
+- `src/app`: Next.js 15 App Router routes. `layout.tsx` wires up global providers and fonts.
+- `src/components/ui`: Shared shadcn primitives; feature widgets co-located with their entry point.
+- `src/hooks`: Typed hooks for forms/state; isolate side effects.
+- `src/lib`: Pure utility functions; avoid React imports to support tree shaking.
+- `public/`: Static assets. `src/app/globals.css`: global tokens.
+- Tailwind config: `postcss.config.mjs`, `components.json`.
 
-## Build, Test & Development Commands
+## Build, Test, and Dev Commands
 
-- `npm run dev` — Start dev server with hot reload at `http://localhost:3000`.
-- `npm run build` — Create production bundle in `.next/` and validate type safety.
-- `npm run start` — Serve compiled app; use to smoke-test production.
-- `npm run lint` — Run Next.js ESLint; must pass before committing.
+- `npm run dev`: Start dev server (`http://localhost:3000`) with hot reload.
+- `npm run build`: Create production bundle in `.next/`, validate type safety.
+- `npm run start`: Serve compiled app. Use to test production builds.
+- `npm run lint`: Run Next.js ESLint; lint must pass before commit.
 
-## Coding Style & Naming Conventions
+## Code Style & Naming
 
-- Always use TypeScript; add explicit export types for non-trivial logic.
-- File names: `kebab-case.ts(x)`; component and assets names: PascalCase, match component.
-- Prefer functional components and early returns; Tailwind classes should remain declarative, not conditional.
-- Use Prettier defaults (2-space indent, double quotes); format with `npm run lint -- --fix`.
-
-## Testing Guidelines
-
-- No automated suite yet; add Vitest, React Testing Library, or Playwright as needed.
-- Tests go in `src/__tests__` or as `<name>.test.tsx` alongside files.
-- Target ≥80% coverage on new modules; note test command in PRs.
-
-## Commit & PR Guidelines
-
-- Use short, present-tense subjects (`prune all`, `Update...`); summaries ≤50 characters; detail in the body.
-- Squash local fix-ups before pushing; highlight breaking changes.
-- PRs should state problem, solution, test evidence (UI screenshots, linked issues).
-- Request peer review and wait for build/lint checks to pass before merging.
+- TypeScript everywhere; add explicit export types for nontrivial logic.
+- File names: `kebab-case.ts(x)`; components/assets: PascalCase.
+- Prefer functional components, early returns. Keep Tailwind classes declarative.
+- Use Prettier defaults (2-space indent, double quotes). Run `npm run lint -- --fix` to format.
 
 ## UI Components & Theming
 
-- Shared UI uses `@radix-ui` plus Tailwind; extend inside `src/components/ui` for consistency.
-- Manage fonts in `src/app/layout.tsx`; design tokens in `globals.css` (avoid inline overrides).
-- Update `components.json` when scaffolding new shadcn pieces; commit generated files together.
+- Base UI uses `@radix-ui` and Tailwind. Extend inside `src/components/ui` for consistency.
+- Manage fonts in `src/app/layout.tsx`; design tokens in `globals.css`. Avoid inline overrides.
+
+## Component API Safety
+
+- Always expose `className?: string` on top-level exported components and merge it via your class utility (e.g., `cn`) to preserve composition.
+- Prefer explicit union variants over booleans for multi-state visuals (e.g., `tone: "default" | "success" | "destructive"`).
+- shadcn/ui Select (Radix) rules:
+  - Every `SelectItem` must have a non-empty `value` prop; never use `""`.
+  - Do not add a placeholder as an item; use `<SelectValue placeholder="..." />` in the trigger.
+  - Ensure `value`/`defaultValue` matches one of the item values; otherwise leave uncontrolled so the placeholder shows.
+
+## Hydration & Build Health
+
+- Avoid React hydration mismatches; gate client-only UI until hydrated and never access browser APIs at module scope.
+- Respect `prefers-reduced-motion`; limit transitions to opacity/transform (never `transition: all`).
+- Code must pass `npm run lint` and `tsc --noEmit` before commit.
