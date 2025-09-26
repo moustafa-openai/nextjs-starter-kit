@@ -11,25 +11,36 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 
 ### Style Options
 
-1. **Neobrutalist**: Stark mono, thick rules, oversized type, punch accent.
-2. **Retro-Futurist**: Neon/cyan magenta, soft glow, gridlines.
-3. **Swiss/International**: Strict grid, red/black/white, disciplined whitespace.
-4. **Editorial/Magazine**: Serif headlines, asymmetry, image-first.
-5. **Terminal/Mono**: Dark canvas, monospace, scanlines, caret micro-motion.
-6. **Bauhaus Geo**: Primary triad, geometric blocks, circular motifs.
-7. **Memphis Pop**: Playful shapes, confetti chips, bold color.
-8. **Nordic Calm**: Cool neutrals, soft gradients, airy spacing.
-9. **Monochrome Bold**: Pure black/white, crisp 1px rules.
-10. **Cyberpunk Noir**: Near-black, one acid accent, restrained glitch.
-11. **Invent your own style**: Invent a new style if needed, but ensure consistency once chosen.
+1. **Neobrutalist**: Stark mono, thick rules, oversized type, punch accent. _Palette cues:_ ink/white + saffron or cyan.
+2. **Retro-Futurist**: Neon/cyan–magenta, soft glow, gridlines. _Palette cues:_ near-black + teal + hot pink (no purple).
+3. **Swiss/International**: Strict grid, red/black/white, disciplined whitespace. _Palette cues:_ white + carbon + Swiss red.
+4. **Editorial/Magazine**: Serif headlines, asymmetry, image-first. _Palette cues:_ cream + ink + rust or navy.
+5. **Terminal/Mono**: Dark canvas, monospace, scanlines, caret micro-motion. _Palette cues:_ graphite + light gray + mint/cyan.
+6. **Bauhaus Geo**: Primary triad, geometric blocks, circular motifs. _Palette cues:_ black/white + red + yellow + blue.
+7. **Memphis Pop**: Playful shapes, confetti chips, bold color. _Palette cues:_ off-white + coral + sky + lemon.
+8. **Nordic Calm**: Cool neutrals, soft gradients, airy spacing. _Palette cues:_ fog gray + slate + soft green.
+9. **Monochrome Bold**: Pure black/white, crisp 1px rules. _Palette cues:_ black/white + single accent (orange or blue).
+10. **Cyberpunk Noir**: Near-black, one acid accent, restrained glitch. _Palette cues:_ charcoal + electric cyan or magenta.
+11. **Solarized**: Dark, high contrast, readability-first. _Palette cues:_ deep teal + sand + amber + cyan (avoid purple).
+12. **Gruvbox**: Warm, earthy tones, readability-first. _Palette cues:_ coal + parchment + orange + moss.
+13. **Dracula**: Dark, high contrast, readability-first. _Palette cues:_ midnight + ice + red + cyan/green (avoid purple).
+14. **Invent your own style**: Invent a new style if needed, but ensure consistency once chosen. _Define:_ name + 3–5 colors + type pairing.
+15. **Coastal Pastel**: Seafoam and sand with clean navy accents; breezy spacing, soft shadows. _Palette cues:_ seafoam + sand + navy.
+16. **Jet & Gold Art-Deco**: Charcoal base with gold linework, stepped geometry, crisp symmetry. _Palette cues:_ black/charcoal + gold + ivory.
+17. **Jade Porcelain**: Porcelain whites with jade and ink accents; delicate borders, calm rhythm. _Palette cues:_ porcelain + jade + deep ink.
+18. **Citrus Slate**: Slate neutrals with citrus pops; sharp grid, high-contrast CTAs. _Palette cues:_ slate gray + lemon/clementine + off-white.
+19. **Granite & Saffron**: Stone grays with saffron accent; solid blocks, subtle texture, assertive headings. _Palette cues:_ granite gray + saffron + bone.
+20. **Paper & Graphite**: Cream paper, graphite rules, editorial red marks; print-inspired hierarchy and restraint. _Palette cues:_ cream + graphite + editorial red.
+21. **Glacier Glass**: Frosted surfaces, icy blues, gentle blur; crisp outlines, restrained translucency. _Palette cues:_ ice blue + glacier white + steel.
+22. **Workshop Neon**: Whiteboard grid energy, fluorescent surfaces, playful annotation chips. _Palette cues:_ electric green + jet black + citrus orange + highlighter pink.
 
-**Avoid purple-themed designs—they are not effective.**
+**Avoid purple and teal-themed designs—they are not effective. Favor light or softly lit palettes by default; choose dark mode only when the brief demands it and ensure it reads premium, not muddy.**
 
 ### Visual Quality Bar
 
 - Open every screen with intentional hierarchy: clear entry point, persuasive primary action, and evident purpose.
 - Dial in a differentiated palette and compositional rhythm—no stock “AI slop”; every surface should feel designed.
-- Lean into bold palettes and thoughtful typography that feel premium; just ensure semantics and states stay legible.
+- Lean into bold palettes and thoughtful typography that feel premium; keep semantics and states legible.
 - Showcase shadcn primitives with personality: layer patterns, iconography, and micro-interactions that reinforce the chosen style.
 - Preview responsive breakpoints early; the first pass must look excellent from 320px to 1440px without ad-hoc fixes later.
 - Audit accessibility at design time (contrast, focus states, alt text) so polish survives implementation.
@@ -40,27 +51,41 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 1. **Define the story**: Name the style (from the list or your own) and write a one-sentence mood so the direction feels intentional, not generic.
 2. **Set the tokens**: Update `globals.css` (colors, radii, spacing scale) and `layout.tsx` fonts before composing UI; document those choices in the response.
 3. **Block the composition**: Sketch the grid and section hierarchy (lead section, supporting rails, detail cards) so the layout has rhythm and negative space.
-4. **Add depth with discipline**: Use a single gradient or pattern layer, layered cards, or angled dividers to create interest while respecting the guardrails.
-5. **Apply signature details**: Curate icons, badges, callouts, and CTA stacks that feel like one family—no default buttons mixed with new variants.
-6. **Run the design QA**: Before returning code, check contrast, spacing, button alignment, and whether every section feels like part of the same design story.
+4. **Map the interactions**: List the workflows the user needs (e.g., scheduling sessions, editing agendas) and commit to real client-side components, state, and validation—not static mock content.
+5. **Add depth with discipline**: Use a single gradient or pattern layer, layered cards, or angled dividers to create interest while respecting the guardrails.
+6. **Apply signature details**: Curate icons, badges, callouts, and CTA stacks that feel like one family—no default buttons mixed with new variants.
+7. **Run the design QA**: Before returning code, check contrast, spacing, button alignment, and whether every section feels like part of the same design story. Ship richness without clutter—every module needs a job.
 
 # General Development Guidelines
 
 - Use **typed props** everywhere.
+
 - Place pure utilities in `src/lib` (never import React there).
+
 - Structure the app following Next.js 15 App Router format:
   - Shared primitives: `src/components/ui`
   - Route files: `src/app/*`
+
 - Manage Tailwind tokens in `src/app/globals.css`. When designing, update `globals.css` to match the theme, rather than using inline overrides. Extend shadcn UI in `src/components/ui`.
+
 - When creating a new design, modify `page.tsx` directly when possible for rapid user feedback. Refactor into new components only when requested.
+
 - It is acceptable to make multiple large changes at once; users prefer consolidated updates.
+
 - After each significant code or tool operation, validate the result in 1–2 lines and proceed or self-correct as needed.
+
 - If the user only asks a question, simply answer it—do not overcomplicate.
+
+- If the prompt implies workflows or tools, ship fully interactive components (forms, editors, calendars) with typed state instead of static mockups. Feature-rich ≠ feature-bloated—only keep interactions that advance the user’s goal.
+
 - Use ast-grep for fast code searches as needed.
 
 - Adhere to existing design tokens and primitives; prefer shadcn/ui composition over custom styles; avoid inline style overrides unless strictly necessary.
+
 - Call out risky styling decisions (contrast, spacing, motion) to the user early and suggest improvements rather than waiting for feedback.
+
 - If the layout drifts toward generic, pitch a bolder alternative and explain how you would implement it—do not settle for “good enough.”
+- Favor luminous or neutral palettes unless the brief explicitly asks for dark mode; avoid default dark gradients that read as AI slop.
 
 ## Client-First Components
 
@@ -70,19 +95,37 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 - Verify client components stay hydrated without mismatch warnings; use feature flags or guards when referencing browser APIs.
 - When a UX pitfall is obvious (e.g., confusing state colors), recommend the fix in the response instead of shipping it silently.
 
+## Interaction Fidelity
+
+- Keep the feature set purposeful: remove any module that doesn’t have a clear narrative or functional role.
+- Model real data: define TypeScript types and seed content that mirrors the user’s scenario (e.g., sessions with objectives, attendees, status).
+- Wire interactive affordances end-to-end—users must be able to add, edit, reorder, and delete via accessible controls backed by client state.
+- Use shadcn/ui primitives (`Dialog`, `Sheet`, `Calendar`, `Form`, `Command`) to capture input, validation, and feedback instead of placeholder buttons.
+- Provide companion states (empty, loading, error, success) so the experience is resilient, not a static snapshot.
+- Narrate key interactions in your response so the user knows how the UI behaves and what to try first.
+
 # UX & Accessibility (Non-Negotiable)
 
 - **Full keyboard support**: Use WAI-ARIA as appropriate, ensure visible `:focus-visible` states, and implement focus trap/restore in overlays.
+
 - **Adequate hit target sizes**: Minimum 24px (44px on mobile); input font size at least 16px (to prevent iOS zoom).
+
 - **State in URL**: Filters, tabs, and pagination should be reflected in the URL.
+
 - Implement optimistic updates with undo/rollback; always confirm destructive actions.
+
 - Use `aria-live="polite"` for async updates. Label all icon-only buttons and ensure links use semantic elements (`<a>`/`<Link>`).
+
 - Design empty, loading, and error states according to the selected style.
+
 - Ensure high text-to-background contrast for legibility.
 
 - Build experiences that feel crafted, surprising, and polished—no bland layouts shipped.
+
 - Verify responsive behavior on mobile, tablet, and desktop before handing off.
+
 - Reach for `src/components/ui` primitives first; extend them thoughtfully to maintain cohesion.
+
 - Keep action sets cohesive: align button variants, corner radii, and spacing so adjacent actions feel like one system.
 
 # Performance Guidelines
@@ -99,14 +142,17 @@ Never ship a generic UI for any new project. If the user does not specify a styl
   - Use responsive type to avoid oversized headings on small screens (e.g., `text-base sm:text-lg md:text-xl`).
   - Ensure long/unbroken content wraps with `break-words`; reserve `break-all` as a last resort.
   - For single-line labels in flex rows: set `min-w-0` on the flex child and add `truncate` when appropriate.
+
 - **Prevent layout bleed**:
   - Constrain widths inside components with `w-full max-w-full`; avoid viewport units in components.
   - In flex/grid layouts where children should shrink: set `min-w-0` and `min-h-0` on child containers.
   - Wrap absolutely positioned decorative layers with a `relative` parent; clip with `overflow-hidden` when the parent has rounded edges.
   - Prefer `gap-*` spacing over negative margins; avoid absolute positioning unless essential.
+
 - **Responsive safety checks**:
   - Ensure no horizontal scrollbars at any breakpoint; if needed (e.g., data tables), scope with `overflow-x-auto` on the smallest container.
   - Allow content to wrap (`flex-wrap`) where appropriate rather than forcing fixed widths.
+
 - **Media sizing**:
   - Images/videos must not overflow their containers: use `max-w-full h-auto`.
   - For fixed-height regions, use `object-cover` inside a `relative overflow-hidden` wrapper.
@@ -117,29 +163,36 @@ Never ship a generic UI for any new project. If the user does not specify a styl
   - Commit to one base, one neutral, and one accent; derive interaction states with opacity, not new hues.
   - Maintain WCAG AA: body text ≥ 4.5:1; captions/labels ≥ 3:1 on solid surfaces.
   - Never pair acid yellow accents with teal or green bases.
-  - Ensure text/icons on semantic surfaces (error, success, info) contrast at ≥4.5:1—avoid tone-on-tone like bright red text on red fill.
+  - Ensure text/icons on semantic surfaces (error, success, info) contrast at ≥ 4.5:1—avoid tone-on-tone like bright red text on red fill.
+
 - **Backgrounds**:
   - Default to flat fills or a single subtle radial/linear gradient ≤ 8% contrast.
   - Avoid noise overlays, glow halos, or stacked gradients unless the chosen style mandates them.
+
 - **Typography**:
   - Limit the system to two families (display + text) on a modular scale (~1.25).
   - Cap lead copy at 60–72ch and body copy at 45–65ch; keep headlines within three lines.
   - Use uppercase micro-labels only when the style requires it; otherwise default to sentence case.
+
 - **Spacing & grid**:
   - Work on an 8-pt scale; container widths: sm 640 / md 768 / lg 1024 / xl 1280 / 2xl 1440.
   - Align labels, inputs, and CTAs to a strict 12-column grid.
   - Choose a single corner radius (4 / 8 / 12 / 16) and apply it across the page.
+
 - **Forms**:
-  - Keep inputs ≥44px tall; labels 12–14px; placeholders ≥70% of body text contrast.
+  - Keep inputs ≥ 44px tall; labels 12–14px; placeholders ≥ 70% of body text contrast.
   - Make the primary CTA visually dominant—size, weight, and contrast must signal priority.
   - Place inline help beneath inputs; avoid cluttering with side notes.
   - Use a unified action hierarchy: primary/secondary/tertiary buttons should share structure and only diverge through tokenized variants.
+
 - **Cards & chips**:
   - Stick to one elevation level (e.g., `shadow-sm`) or go flat; no glow effects.
   - Derive chip and badge colors from the primary accent, without introducing extra hues.
+
 - **Motion**:
   - Limit transitions to transforms and opacity while honoring `prefers-reduced-motion`.
   - Keep micro-interactions under 200ms; never ship perpetual glows or pulsing rings.
+
 - **Anti-ugly self-check**:
   - Multiple hero gradients or glow rings present? Remove them.
   - Sibling components with mismatched radii? Normalize before shipping.
@@ -147,6 +200,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
   - Body or placeholder contrast failing WCAG? Fix the palette.
   - Screen lacks a focal point or clear primary CTA? Clarify the hierarchy.
   - Are section backgrounds indistinguishable, flattening the flow? Introduce a purposeful shift (tint, divider, or pattern) within the style limits.
+  - Do modules feel busy or ornamental? Strip them back to the essentials and reinforce hierarchy with spacing and type.
   - Labels, inputs, help text, and CTAs off the 8-pt grid? Realign them.
 
 # Repository Structure
