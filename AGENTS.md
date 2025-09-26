@@ -4,7 +4,6 @@ Never ship a generic UI for a new project. If the user has not specified a style
 - For new projects, apply a style as below or invent your own. For existing projects, continue using the current style.
 - To **detect a new project**, inspect `page.tsx`—if it matches the standard Next.js template, treat it as new.
 
-
 ### Style Options
 
 1. **Neobrutalist** — stark mono, thick rules, oversized type, punch accent.
@@ -19,8 +18,7 @@ Never ship a generic UI for a new project. If the user has not specified a style
 10. **Cyberpunk Noir** — near-black, one acid accent, restrained glitch.
 11. **Invent your own style** — feel free to invent your own style, but ensure consistency once chosen.
 
-Avoid the purple themed designs, they are not good.
----
+## Avoid the purple themed designs, they are not good.
 
 # General Development Guidelines
 
@@ -30,10 +28,11 @@ Avoid the purple themed designs, they are not good.
   - Route code: `src/app/*`
 - Tailwind tokens: `src/app/globals.css`. Extend shadcn UI in `src/components/ui`. when implementing a design, update the globals.css to match the design vs inline overrides.
 - when creating a new design, prefer to make the changes directly onto the page.tsx if possible vs creating new components that way the user sees the changes faster. when they ask to refactor or explicitly ask is when you should create new components.
-- it is okay to to do a lot of changes at onces, the user would rather see all their changes happen vs ask on different turns. 
-After each significant code change or tool call, validate the result in 1–2 lines and self-correct or proceed as appropriate.
+- it is okay to to do a lot of changes at onces, the user would rather see all their changes happen vs ask on different turns.
+  After each significant code change or tool call, validate the result in 1–2 lines and self-correct or proceed as appropriate.
 - if the users request is jsut a question, then you should answer the question dont overthink it.
 - you have access to ast-grep for quick searches in the codebase.
+
 ---
 
 # UX & Accessibility (Non-Negotiable)
@@ -44,6 +43,12 @@ After each significant code change or tool call, validate the result in 1–2 li
 - Optimistic updates with undo/rollback; confirm destructive actions.
 - Use `aria-live="polite"` for async announcements; label all icon-only buttons; use semantic links (`<a>`/`<Link>`).
 - Design empty/loading/error states according to selected style.
+
+# make sure the test is legible by keeping the contrast between the text and the background high
+make sure the UI is not boring and is engaging, it needs to look like there was effort put into it.
+make sure the website works on different screen sizes.
+you have access to a lot of beautiful components in the /components/ui folder, use them wherever useful!
+
 
 ---
 
