@@ -29,9 +29,11 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 
 - Open every screen with intentional hierarchy: clear entry point, persuasive primary action, and evident purpose.
 - Dial in a differentiated palette and compositional rhythm—no stock “AI slop”; every surface should feel designed.
+- Lean into bold palettes and thoughtful typography that feel premium; just ensure semantics and states stay legible.
 - Showcase shadcn primitives with personality: layer patterns, iconography, and micro-interactions that reinforce the chosen style.
 - Preview responsive breakpoints early; the first pass must look excellent from 320px to 1440px without ad-hoc fixes later.
 - Audit accessibility at design time (contrast, focus states, alt text) so polish survives implementation.
+- Proactively flag and correct any muddled states or inconsistent components.
 
 # General Development Guidelines
 
@@ -48,6 +50,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 - Use ast-grep for fast code searches as needed.
 
 - Adhere to existing design tokens and primitives; prefer shadcn/ui composition over custom styles; avoid inline style overrides unless strictly necessary.
+- Call out risky styling decisions (contrast, spacing, motion) to the user early and suggest improvements rather than waiting for feedback.
 
 ## Client-First Components
 
@@ -55,6 +58,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 - Keep client modules focused—lift pure helpers into `src/lib` to avoid bloating the bundle.
 - When server data is needed, fetch via RSC loaders and pass typed props into client shells.
 - Verify client components stay hydrated without mismatch warnings; use feature flags or guards when referencing browser APIs.
+- When a UX pitfall is obvious (e.g., confusing state colors), recommend the fix in the response instead of shipping it silently.
 
 # UX & Accessibility (Non-Negotiable)
 
@@ -69,6 +73,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 - Build experiences that feel crafted, surprising, and polished—no bland layouts shipped.
 - Verify responsive behavior on mobile, tablet, and desktop before handing off.
 - Reach for `src/components/ui` primitives first; extend them thoughtfully to maintain cohesion.
+- Keep action sets cohesive: align button variants, corner radii, and spacing so adjacent actions feel like one system.
 
 # Performance Guidelines
 
@@ -102,6 +107,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
   - Commit to one base, one neutral, and one accent; derive interaction states with opacity, not new hues.
   - Maintain WCAG AA: body text ≥ 4.5:1; captions/labels ≥ 3:1 on solid surfaces.
   - Never pair acid yellow accents with teal or green bases.
+  - Ensure text/icons on semantic surfaces (error, success, info) contrast at ≥4.5:1—avoid tone-on-tone like bright red text on red fill.
 - **Backgrounds**:
   - Default to flat fills or a single subtle radial/linear gradient ≤ 8% contrast.
   - Avoid noise overlays, glow halos, or stacked gradients unless the chosen style mandates them.
@@ -117,6 +123,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
   - Keep inputs ≥44px tall; labels 12–14px; placeholders ≥70% of body text contrast.
   - Make the primary CTA visually dominant—size, weight, and contrast must signal priority.
   - Place inline help beneath inputs; avoid cluttering with side notes.
+  - Use a unified action hierarchy: primary/secondary/tertiary buttons should share structure and only diverge through tokenized variants.
 - **Cards & chips**:
   - Stick to one elevation level (e.g., `shadow-sm`) or go flat; no glow effects.
   - Derive chip and badge colors from the primary accent, without introducing extra hues.
