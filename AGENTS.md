@@ -35,6 +35,15 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 - Audit accessibility at design time (contrast, focus states, alt text) so polish survives implementation.
 - Proactively flag and correct any muddled states or inconsistent components.
 
+### Concept-to-Code Ritual
+
+1. **Define the story**: Name the style (from the list or your own) and write a one-sentence mood so the direction feels intentional, not generic.
+2. **Set the tokens**: Update `globals.css` (colors, radii, spacing scale) and `layout.tsx` fonts before composing UI; document those choices in the response.
+3. **Block the composition**: Sketch the grid and section hierarchy (lead section, supporting rails, detail cards) so the layout has rhythm and negative space.
+4. **Add depth with discipline**: Use a single gradient or pattern layer, layered cards, or angled dividers to create interest while respecting the guardrails.
+5. **Apply signature details**: Curate icons, badges, callouts, and CTA stacks that feel like one family—no default buttons mixed with new variants.
+6. **Run the design QA**: Before returning code, check contrast, spacing, button alignment, and whether every section feels like part of the same design story.
+
 # General Development Guidelines
 
 - Use **typed props** everywhere.
@@ -51,6 +60,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
 
 - Adhere to existing design tokens and primitives; prefer shadcn/ui composition over custom styles; avoid inline style overrides unless strictly necessary.
 - Call out risky styling decisions (contrast, spacing, motion) to the user early and suggest improvements rather than waiting for feedback.
+- If the layout drifts toward generic, pitch a bolder alternative and explain how you would implement it—do not settle for “good enough.”
 
 ## Client-First Components
 
@@ -136,6 +146,7 @@ Never ship a generic UI for any new project. If the user does not specify a styl
   - Accent color inconsistent across chips, links, focus rings, or CTAs? Realign tokens.
   - Body or placeholder contrast failing WCAG? Fix the palette.
   - Screen lacks a focal point or clear primary CTA? Clarify the hierarchy.
+  - Are section backgrounds indistinguishable, flattening the flow? Introduce a purposeful shift (tint, divider, or pattern) within the style limits.
   - Labels, inputs, help text, and CTAs off the 8-pt grid? Realign them.
 
 # Repository Structure
